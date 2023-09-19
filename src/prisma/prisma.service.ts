@@ -7,7 +7,7 @@ export class PrismaService extends PrismaClient {
     super({
       datasources: {
         db: {
-          url: 'mysql://root@localhost:3067/nestjs',
+          url: 'mysql://root@localhost:3307/nestjs',
         },
       },
     });
