@@ -6,6 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "db:rm": "docker rm nestjs-crud-api-mysql-1",
+    "db:stop": "docker stop nestjs-crud-api-mysql-1",
+    "db:up": "docker-compose up --build -d",
+    "db:dev:restart": "yarn db:stop &&  yarn db:rm && yarn db:up && sleep 30 && yarn deploy:db",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -20,10 +24,13 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "update:db": "npx prisma db push",
     "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev",
+    "deploy:db": "npx prisma migrate deploy",
     "db:studio": "npx prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.3.1",

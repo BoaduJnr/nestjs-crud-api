@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDto } from 'src/dto';
+import { AuthDto, LoginDto } from 'src/dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +12,7 @@ export class AuthController {
   }
 
   @Post('login')
-  signin() {
-    return 'I am login';
+  signin(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
   }
 }
