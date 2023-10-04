@@ -9,3 +9,12 @@ services:
       - MYSQL_USER=my_user
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=nestjs
+  test-db:
+    image: 'bitnami/mysql:latest'
+    ports:
+      - '3308:3306'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=my_user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=nestjs

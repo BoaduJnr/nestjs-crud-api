@@ -31,17 +31,17 @@ export class AuthService {
     }
   }
   async login({ email, password }: LoginDto) {
+    const user = await this.prisma.user.findFirst({
+      where: { email },
+    });
+    if (!user) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
+    const passwordMatch = await argon.verify(user.password, password);
+    if (!passwordMatch) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
     try {
-      const user = await this.prisma.user.findFirst({
-        where: { email },
-      });
-      if (!user) {
-        throw new ForbiddenException('Credentials incorrect');
-      }
-      const passwordMatch = await argon.verify(user.password, password);
-      if (!passwordMatch) {
-        throw new ForbiddenException('Credentials incorrect');
-      }
       const access_token = await this.signToken({
         userId: user.id,
         email: user.email,
